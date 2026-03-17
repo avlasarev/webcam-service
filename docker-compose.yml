@@ -1,0 +1,30 @@
+version: "3.9"
+
+services:
+  webcam:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: webcam_service
+    devices:
+      - /dev/video0:/dev/video0
+    networks:
+      - private_lan
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    container_name: nginx_gateway
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - private_lan
+    depends_on:
+      - webcam
+    restart: unless-stopped
+
+networks:
+  private_lan:
+    driver: bridge
