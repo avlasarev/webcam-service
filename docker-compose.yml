@@ -1,13 +1,11 @@
-version: "3.9"
-
 services:
   webcam:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    build: .
     container_name: webcam_service
     devices:
-      - /dev/video0:/dev/video0
+      - /dev/video1:/dev/video0
+    group_add:
+      - video
     networks:
       - private_lan
     restart: unless-stopped
