@@ -3,7 +3,7 @@ services:
     build: .
     container_name: webcam_service
     devices:
-      - /dev/video1:/dev/video0
+      - /dev/video0:/dev/video0
     group_add:
       - video
     networks:
