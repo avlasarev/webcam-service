@@ -1,5 +1,5 @@
 fastapi
 uvicorn[standard]
 opencv-python-headless
-numpy
+numpy<2.0
 
