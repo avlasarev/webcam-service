@@ -5,11 +5,10 @@ services:
     devices:
       - /dev/video0:/dev/video0
     group_add:
-      - video
+      - "44"
     networks:
       - private_lan
     restart: unless-stopped
-
   nginx:
     image: nginx:alpine
     container_name: nginx_gateway
@@ -22,7 +21,6 @@ services:
     depends_on:
       - webcam
     restart: unless-stopped
-
 networks:
   private_lan:
     driver: bridge
