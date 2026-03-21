@@ -9,6 +9,7 @@ services:
     networks:
       - private_lan
     restart: unless-stopped
+
   nginx:
     image: nginx:alpine
     container_name: nginx_gateway
@@ -20,7 +21,50 @@ services:
       - private_lan
     depends_on:
       - webcam
+      - navidrome
     restart: unless-stopped
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: "1000:1000"
+    environment:
+      - ND_SCANSCHEDULE=1h
+      - ND_LOGLEVEL=info
+      - ND_BASEURL=/music
+    volumes:
+      - ./navidrome/data:/data
+      - /home/eker/music:/music:ro
+    networks:
+      - private_lan
+    restart: unless-stopped
+
+  wireguard:
+    image: linuxserver/wireguard
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Sofia
+      - SERVERURL=212.5.142.181
+      - SERVERPORT=51820
+      - PEERS=phone,laptop
+      - PEERDNS=auto
+      - INTERNAL_SUBNET=10.13.13.0
+    ports:
+      - "51820:51820/udp"
+    volumes:
+      - ./wireguard:/config
+      - /lib/modules:/lib/modules
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - private_lan
+    restart: unless-stopped
+
 networks:
   private_lan:
     driver: bridge
