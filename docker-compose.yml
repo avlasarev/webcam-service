@@ -1,4 +1,5 @@
 services:
+
   webcam:
     build: .
     container_name: webcam_service
@@ -6,6 +7,21 @@ services:
       - /dev/video1:/dev/video0
     group_add:
       - "44"
+    networks:
+      - private_lan
+    restart: unless-stopped
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: "1000:1000"
+    environment:
+      - ND_SCANSCHEDULE=1h
+      - ND_LOGLEVEL=info
+      - ND_BASEURL=/music
+    volumes:
+      - ./navidrome/data:/data
+      - /home/eker/music:/music:ro
     networks:
       - private_lan
     restart: unless-stopped
@@ -24,21 +40,6 @@ services:
       - navidrome
     restart: unless-stopped
 
-  navidrome:
-    image: deluan/navidrome:latest
-    container_name: navidrome
-    user: "1000:1000"
-    environment:
-      - ND_SCANSCHEDULE=1h
-      - ND_LOGLEVEL=info
-      - ND_BASEURL=/music
-    volumes:
-      - ./navidrome/data:/data
-      - /home/eker/music:/music:ro
-    networks:
-      - private_lan
-    restart: unless-stopped
-
   wireguard:
     image: linuxserver/wireguard
     container_name: wireguard
@@ -54,6 +55,7 @@ services:
       - PEERS=phone,laptop
       - PEERDNS=auto
       - INTERNAL_SUBNET=10.13.13.0
+      - ALLOWEDIPS=10.13.13.0/24
     ports:
       - "51820:51820/udp"
     volumes:
