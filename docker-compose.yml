@@ -3,14 +3,11 @@ services:
   webcam:
     build: .
     container_name: webcam_service
+    privileged: true
     devices:
       - /dev/video1:/dev/video0
     group_add:
       - "44"
-    cap_add:
-      - SYS_RAWIO
-    security_opt:
-      - seccomp:unconfined
     networks:
       - private_lan
     restart: unless-stopped
