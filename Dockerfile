@@ -6,6 +6,9 @@ RUN apt-get update && apt-get install -y \
     libv4l-dev \
     && rm -rf /var/lib/apt/lists/*
 
+RUN groupadd -g 44 video || true && \
+    usermod -aG video root
+
 WORKDIR /app
 COPY app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
