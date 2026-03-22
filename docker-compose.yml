@@ -51,7 +51,7 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Sofia
-      - SERVERURL=212.5.142.181
+      - SERVERURL=77.85.204.197
       - SERVERPORT=51820
       - PEERS=phone,laptop
       - PEERDNS=auto
