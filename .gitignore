@@ -1,0 +1,7 @@
+.env
+.venv/
+wireguard/
+navidrome/
+__pycache__/
+*.pyc
+.idea/
