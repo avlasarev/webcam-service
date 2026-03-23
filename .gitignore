@@ -5,3 +5,4 @@ navidrome/
 __pycache__/
 *.pyc
 .idea/
+docs/
