@@ -39,6 +39,7 @@ services:
     depends_on:
       - webcam
       - navidrome
+      - openwebui
     restart: unless-stopped
 
   wireguard:
@@ -66,6 +67,29 @@ services:
       - net.ipv4.conf.all.src_valid_mark=1
     networks:
       - private_lan
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    volumes:
+      - ./ollama/data:/root/.ollama
+    networks:
+      - private_lan
+    restart: unless-stopped
+
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: openwebui
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+    volumes:
+      - ./openwebui/data:/app/backend/data
+      - ./docs:/app/backend/data/docs
+    networks:
+      - private_lan
+    depends_on:
+      - ollama
     restart: unless-stopped
 
 networks:
