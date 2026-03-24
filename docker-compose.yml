@@ -42,7 +42,7 @@ services:
     depends_on:
       - webcam
       - navidrome
-      - openwebui
+      - hollama
     restart: unless-stopped
 
   wireguard:
@@ -83,14 +83,11 @@ services:
         ipv4_address: 172.18.0.30
     restart: unless-stopped
 
-  openwebui:
-    image: ghcr.io/open-webui/open-webui:v0.4.8
-    container_name: openwebui
+  hollama:
+    image: ghcr.io/fmaclen/hollama:latest
+    container_name: hollama
     environment:
-      - OLLAMA_BASE_URL=http://ollama:11434
-    volumes:
-      - ./openwebui/data:/app/backend/data
-      - ./docs:/app/backend/data/docs
+      - HOLLAMA_OLLAMA_API_URL=http://ollama:11434
     networks:
       private_lan:
         ipv4_address: 172.18.0.31
