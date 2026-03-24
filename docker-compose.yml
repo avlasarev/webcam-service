@@ -84,7 +84,7 @@ services:
     restart: unless-stopped
 
   openwebui:
-    image: ghcr.io/open-webui/open-webui:main
+    image: ghcr.io/open-webui/open-webui:v0.4.8
     container_name: openwebui
     environment:
       - OLLAMA_BASE_URL=http://ollama:11434
