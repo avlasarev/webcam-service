@@ -76,6 +76,8 @@ services:
   ollama:
     image: ollama/ollama:latest
     container_name: ollama
+    environment:
+      - OLLAMA_ORIGINS=*
     volumes:
       - ./ollama/data:/root/.ollama
     networks:
