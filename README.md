@@ -148,19 +148,6 @@ Ollama API is proxied through NGINX at `/ollama/` for internal use.
 
 ---
 
-## Deployment workflow
-
-```
-Edit in PyCharm (Windows)
-    → git add . && git commit -m "message" && git push
-        → ssh eker@192.168.1.12
-            → cd ~/webcam-service && git pull
-                → docker compose down && docker compose up -d
-```
-
-
----
-
 ## Known issues and limitations
 
 - DHCP lease for `192.168.1.21` returns after router restart — must be removed manually on each reboot. Permanent fix: configure router DHCP reservation or disable DHCP entirely on the interface.
